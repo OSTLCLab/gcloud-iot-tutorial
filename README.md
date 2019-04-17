@@ -24,10 +24,26 @@ Steps to be done
 * Store the incomming data into a database 
 * Vizualize data
 
-## Setup of gCloud
+## Step by step tutorial
 
+### Open an Account on gCloud
+1. Create an Account for Google cloud, using your voucher.
+2. Login to the console and make sure you are working in the correct project
 
-## Setup of Device (Node-Red)
+### Setup of IoT Core
+1. On the left navigation bar select IoT Core (its located in the "Big Data" section
+2. Activate the IoT Core service
+3. Create a regisitry. The regisitry groups together a fleet of devices that share common properties and rules e.g. for a particular application.
+```
+Name: pde-pickandplace-modules
+Region: europe-west1
+Protocol: MQTT and HTPP
+Default telemetry topic: Create new topic 'default'
+Device state topic: Create new topic 'status'
+Stackdriver Logging: None
+```
+
+### Setup of Device (Node-Red)
 
 
 ## Vizalize Data
