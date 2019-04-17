@@ -35,15 +35,25 @@ Steps to be done
 2. Activate the IoT Core service
 3. Create a regisitry. The regisitry groups together a fleet of devices that share common properties and rules e.g. for a particular application.
 ```
-Name: pde-pickandplace-modules
-Region: europe-west1
-Protocol: MQTT and HTPP
-Default telemetry topic: Create new topic 'default'
-Device state topic: Create new topic 'status'
-Stackdriver Logging: None
+Name : pde-pickandplace-modules
+Region : europe-west1
+Protocol : MQTT and HTPP
+Default telemetry topic : Create new topic 'default'
+Device state topic : Create new topic 'status'
+Stackdriver Logging : None
+```
+4. Create an RS265 key pair in PEM format for your Device: https://cloud.google.com/iot/docs/how-tos/credentials/keys 
+ToDo: Add process for Windows
+5. Create a new device: Select the Divices Tab and choose "Create a Device" 
+```
+Device ID : pde-module-0001
+Authentication : Enter manually
+Public key value : Copy and Paste the content of the pulic key file
+Stackdriver Logging : Debug
 ```
 
 ### Setup of Device (Node-Red)
-
+1. Install gcloud
+Now, your divce is talking to the Cloud
 
 ## Vizalize Data
