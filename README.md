@@ -42,7 +42,15 @@ Default telemetry topic : Create new topic 'default'
 Device state topic : Create new topic 'status'
 Stackdriver Logging : None
 ```
-4. On your deivce (Raspberry PI): Open the console and create an RS265 key pair in PEM format: https://cloud.google.com/iot/docs/how-tos/credentials/keys 
+4. On your deivce (Raspberry PI): Open the console and create an RS265 key pair and a self-sigend certificate in PEM format: https://cloud.google.com/iot/docs/how-tos/credentials/keys 
+
+```
+openssl genrsa -out pde_rsa_private.pem 2048
+openssl rsa -in pde_rsa_private.pem -pubout -out pde_rsa_public.pem
+openssl req -x509 -nodes -newkey rsa:2048 -keyout pde_rsa_private.pem -days 1000000 -out pde_rsa_cert.pem -subj "/CN=unused"
+```
+4. On your deivce (Raspberry PI): Open the console and create an RS265 key pair and a self-sigend certificate in PEM format: https://cloud.google.com/iot/docs/how-tos/credentials/keys 
+4. On your deivce (Raspberry PI): Open the console and create an RS265 key pair and a self-sigend certificate in PEM format: https://cloud.google.com/iot/docs/how-tos/credentials/keys 
 
 5. Create a new device: Select the Divices Tab and choose "Create a Device" 
 ```
@@ -59,8 +67,16 @@ The node-red instance reflects the real device in our example.
 2. Open node-red in the browser (usually: http://localhost:1880)
 3. Open a new flow and import the follwing nodes:
 ```
+[{"id":"a6082cec.d600e","type":"inject","z":"a500d8d8.5e24f8","name":"","topic":"","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":200,"y":440,"wires":[["fffc4044.d99d3"]]},{"id":"fffc4044.d99d3","type":"function","z":"a500d8d8.5e24f8","name":"","func":"msg.payload = {\n    timestamp : msg.payload,\n    temperature : 24\n}\nreturn msg;","outputs":1,"noerr":0,"x":390,"y":440,"wires":[["902471b5.02b21","d06110d8.8af81"]]},{"id":"902471b5.02b21","type":"mqtt out","z":"a500d8d8.5e24f8","name":"","topic":"","qos":"","retain":"","x":610,"y":440,"wires":[]},{"id":"d06110d8.8af81","type":"debug","z":"a500d8d8.5e24f8","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":630,"y":500,"wires":[]}]
+```
+This flow sends a simple JSON object over the MQTT protocol
+4. Doubleclick the mqtt node and add a new mqtt broker:
+```
+The Server of Cloud IoT Core is: mqtt.googleapis.com:8883
+Add new TSL-Configuration:
 
 ```
+This flow sends a simple JSON object over the MQTT protocol
 This flow sends a simple JSON object over the MQTT protocol
 
 Now, your divce is talking to the Cloud
