@@ -51,6 +51,7 @@ Authentication : Enter manually
 Public key value : Copy and Paste the content of the pulic key file
 Stackdriver Logging : Debug
 ```
+Remark: The divice we just created reflects to the "digital twin" of our real device in the cloud. Later the real device will send data to its digital twin. The cloud side need to be absolutely sure, that this data was sent by the one and only real device. This is done with help of the key pair we created: Every data package (in our case JSON Web Tokens, JWT) will be signed on the real device with the help of its private key (only known by the device). The digital twin in the cloud can verify the identiy of the sender with the help of the public key (see Signature use case of the security lecture)
 
 ### Setup of Device (Node-Red)
 1. Install gcloud
