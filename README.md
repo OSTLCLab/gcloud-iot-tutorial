@@ -42,8 +42,8 @@ Default telemetry topic : Create new topic 'default'
 Device state topic : Create new topic 'status'
 Stackdriver Logging : None
 ```
-4. Create an RS265 key pair in PEM format for your Device: https://cloud.google.com/iot/docs/how-tos/credentials/keys 
-ToDo: Add process for Windows
+4. On your deivce (Raspberry PI): Open the console and create an RS265 key pair in PEM format: https://cloud.google.com/iot/docs/how-tos/credentials/keys 
+
 5. Create a new device: Select the Divices Tab and choose "Create a Device" 
 ```
 Device ID : pde-module-0001
@@ -51,10 +51,18 @@ Authentication : Enter manually
 Public key value : Copy and Paste the content of the pulic key file
 Stackdriver Logging : Debug
 ```
-Remark: The device we just created reflects the "digital twin" of our real device in the cloud. Later the real device will send data to its digital twin. The cloud side need to be absolutely sure, that this data was sent by the one and only real device. This is done with help of the key pair we created: Every data package (in our case JSON Web Tokens, JWT) will be signed on the real device with the help of its private key (only known by the device). The digital twin in the cloud can verify the identiy of the sender with the help of the public key (see Signature use case of the security lecture)
+Remark: The device we just created reflects the "digital twin" of our real device in the cloud. Later, the real device will send data to its digital twin. The cloud side needs to be absolutely sure that this data was sent by the one and only real device. This is achieved by help of the key pair we created: Every data package (in our case JSON Web Tokens, JWT) will be signed on the real device with the help of its private key (only known by the device). The digital twin in the cloud can verify the identity of the sender with the help of the public key (see Signature use case of the security lecture)
 
 ### Setup of Device (Node-Red)
-1. Install gcloud
+The node-red instance reflects the real device in our example.
+1. Start node-red on your device (or for testing on your local machine)
+2. Open node-red in the browser (usually: http://localhost:1880)
+3. Open a new flow and import the follwing nodes:
+```
+
+```
+This flow sends a simple JSON object over the MQTT protocol
+
 Now, your divce is talking to the Cloud
 
 ## Vizalize Data
