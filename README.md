@@ -98,11 +98,11 @@ Default Location: EU
 ```
 Table name : raw_data
 Add fields:
-Field name  Type	Mode	Description
-device_id STRING	NULLABLE	
-timestamp TIMESTAMP	NULLABLE	
-success BOOLEAN	NULLABLE	
-temperature FLOAT	NULLABLE
+Field name  Type      Mode
+device_id   STRING    NULLABLE	
+timestamp   TIMESTAMP NULLABLE	
+success     BOOLEAN   NULLABLE	
+temperature FLOAT     NULLABLE
 
 ```
 
