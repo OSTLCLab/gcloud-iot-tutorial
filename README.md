@@ -58,17 +58,23 @@ Stackdriver Logging : Debug
 ```
 Remark: The device we just created reflects the "digital twin" of our real device in the cloud. Later, the real device will send data to its digital twin. The cloud side needs to be absolutely sure that this data was sent by the one and only real device. This is achieved by help of the key pair we created: Every data package (in our case JSON Web Tokens, JWT) will be signed on the real device with the help of its private key (only known by the device). The digital twin in the cloud can verify the identity of the sender with the help of the public key (see Signature use case of the security lecture)
 
-### Setup of Device (Node-Red)
+## Setup of Device (Node-Red)
+
+### Prepare node-red
 The node-red instance reflects the real device in our example.
 1. Start node-red on your device (or for testing on your local machine)
 2. Open node-red in the browser (usually: http://localhost:1880)
-3. Open a new flow and import the follwing nodes:
+3. Go to Manage palette in the top left menu
+4. Install the mdouel: node-red-contrib-google-iot-core
+
+### Create a flow to send data
+1. Open a new flow and import the follwing nodes:
 ```
-[{"id":"a6082cec.d600e","type":"inject","z":"a500d8d8.5e24f8","name":"","topic":"","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":200,"y":440,"wires":[["fffc4044.d99d3"]]},{"id":"fffc4044.d99d3","type":"function","z":"a500d8d8.5e24f8","name":"","func":"msg.payload = {\n    timestamp : msg.payload,\n    temperature : 24\n}\nreturn msg;","outputs":1,"noerr":0,"x":390,"y":440,"wires":[["902471b5.02b21","d06110d8.8af81"]]},{"id":"902471b5.02b21","type":"mqtt out","z":"a500d8d8.5e24f8","name":"","topic":"","qos":"","retain":"","x":610,"y":440,"wires":[]},{"id":"d06110d8.8af81","type":"debug","z":"a500d8d8.5e24f8","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":630,"y":500,"wires":[]}]
+[{"id":"12b340e1.22161f","type":"inject","z":"228871b8.20e63e","name":"","topic":"","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":260,"y":1480,"wires":[["fc4c2a81.470028"]]},{"id":"fc4c2a81.470028","type":"function","z":"228871b8.20e63e","name":"","func":"msg.payload = {\n    timestamp : msg.payload/1000,\n    temperature : 24,\n    success : true,\n    device_id : 'pde-module-0002'\n}\nreturn msg;","outputs":1,"noerr":0,"x":450,"y":1480,"wires":[["a74cd293.c0529","10460897.7d7447"]]},{"id":"a74cd293.c0529","type":"debug","z":"228871b8.20e63e","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":690,"y":1540,"wires":[]},{"id":"10460897.7d7447","type":"google-iot-core out","z":"228871b8.20e63e","name":"","qos":"","retain":"","broker":"","x":700,"y":1440,"wires":[]}]
 ```
 This flow sends a simple JSON object over the MQTT protocol
 
-4. Doubleclick the mqtt node and add a new mqtt broker:
+2. Doubleclick the mqtt node and add a new mqtt broker:
 ```
 The Server of Cloud IoT Core is: mqtt.googleapis.com:8883
 Add new TSL-Configuration:
@@ -76,7 +82,7 @@ Upload the pde_rsa_cert.pem and the pde_rsa_private.pem files (rest can stay bla
 Edit the details of the device you just created on IoT Core
 
 ```
-5. Deploy the flow
+3. Deploy the flow
 
 This flow sends a simple JSON object over the MQTT protocol. If everything works fine, you finde a log entry (go to the details of the device in IoT Core and click on "View logs").
 
