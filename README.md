@@ -82,4 +82,11 @@ This flow sends a simple JSON object over the MQTT protocol. If everything works
 
 Now, your divce is talking to the Cloud
 
-## Link the MQTT data to 
+## Store data from IoT Devices
+To store the data we sent form the device we need to act on the MQTT messages and store the data into a database, in our case into Google's BigQuery.
+
+## Vizualize
+Go to datastudio (its not part of the Google Cloud console)
+https://datastudio.google.com/navigation/reporting
+
+
