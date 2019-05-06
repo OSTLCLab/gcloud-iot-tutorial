@@ -85,6 +85,36 @@ Now, your divce is talking to the Cloud
 ## Store data from IoT Devices
 To store the data we sent form the device we need to act on the MQTT messages and store the data into a database, in our case into Google's BigQuery.
 
+### Create a Datatable in BigQuery
+Our data will be stored in a big data table.
+
+1. Navigate to "BigQuery" in the BigData section of the main navigation in goolge consle
+2. Select the project on the left side and then click on "Create Dataset"
+```
+Name : pde_module
+Default Location: EU
+```
+3. Select the dataset we just created and click on "Create Table"
+```
+Table name : raw_data
+Add fields:
+Field name  Type	Mode	Description
+device_id STRING	NULLABLE	
+timestamp TIMESTAMP	NULLABLE	
+success BOOLEAN	NULLABLE	
+temperature FLOAT	NULLABLE
+
+```
+
+
+
+### Create a Temporary Storage
+The template we will use to push our IoT Data to BigQuery needs a temporary file store.
+
+1. Navigate to "Storage" in the Storage section of the main navigation in goolge consle
+2. Create a new bucket "pde-temp"
+3. Create a new folder in this bucket "iot-data"
+
 ## Vizualize
 Go to datastudio (its not part of the Google Cloud console)
 https://datastudio.google.com/navigation/reporting
