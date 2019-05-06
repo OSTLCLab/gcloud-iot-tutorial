@@ -88,7 +88,7 @@ To store the data we sent form the device we need to act on the MQTT messages an
 ### Create a Datatable in BigQuery
 Our data will be stored in a big data table.
 
-1. Navigate to "BigQuery" in the BigData section of the main navigation in goolge consle
+1. Navigate to "BigQuery" in the BigData section of the main navigation in goolge console
 2. Select the project on the left side and then click on "Create Dataset"
 ```
 Name : pde_module
@@ -106,14 +106,36 @@ temperature FLOAT     NULLABLE
 
 ```
 
+### Create a Subscription Storage
+
+1. Navigate to "Pub/Sub" in the BigData section of the main navigation in goolge console
+2. In "Topics" select "projects/product-data-engineering/topics/default"
+3. Click "Create Subscription"
+```
+Subscription name : store-data
+Delivery Type : Pull
+```
 
 
 ### Create a Temporary Storage
 The template we will use to push our IoT Data to BigQuery needs a temporary file store.
 
-1. Navigate to "Storage" in the Storage section of the main navigation in goolge consle
+1. Navigate to "Storage" in the Storage section of the main navigation in goolge console
 2. Create a new bucket "pde-temp"
 3. Create a new folder in this bucket "iot-data"
+
+### Create a Datsflow
+
+1. Navigate to "Dataflow" in the BigData section of the main navigation in goolge console
+2. Click on "Create Job From Template"
+```
+Job name : store-data
+Cloud Dataflow template : Pub/Sub Subscription to BigQuery
+Regional endpoint : europe-west1
+Cloud Pub/Sub input subscription : projects/product-data-engineering/subscriptions/store-data
+BigQuery output table : product-data-engineering:pde_module.raw_data
+Temporary location: gs://pde-temp/iot-data
+```
 
 ## Vizualize
 Go to datastudio (its not part of the Google Cloud console)
