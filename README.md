@@ -106,7 +106,7 @@ temperature FLOAT     NULLABLE
 
 ```
 
-### Create a Subscription Storage
+### Create a Subscription
 
 1. Navigate to "Pub/Sub" in the BigData section of the main navigation in goolge console
 2. In "Topics" select "projects/product-data-engineering/topics/default"
@@ -137,8 +137,30 @@ BigQuery output table : product-data-engineering:pde_module.raw_data
 Temporary location: gs://pde-temp/iot-data
 ```
 
+### Test
+Now you should be able to send data from node-red (your device) to IoT Core and store it in the database.
+If you send data from node-red (activate butten), you will see the Dataflow job processing it.
+In the BigQuery Section you can query the database with the following command:
+
+```
+SELECT * FROM `product-data-engineering.pde_module.raw_data` LIMIT 1000
+```
+
+And you should see all the samples you sent.
+
 ## Vizualize
-Go to datastudio (its not part of the Google Cloud console)
+Go to datastudio (its not part of the Google Cloud console):
 https://datastudio.google.com/navigation/reporting
 
+1. Goto "Datasources" and click on the "+"
+2. Select "BigQuery"
+3. Choose your data table "raw_data" form the selection path and click "Connect"
+4. On the "raw_data" page click on "Create Report"
+5. Confirm to add "raw_data" to the report
+6. From the "Add a chart" menu select "Time series"
+7. On the right side you can drag and drop the Available Fields to the "Metric" section. Choose "temperature"
+8. Left of the droped "temperature" field, change "Sum" to "Average"
+9. Click on the "View" button to preview your Report
+
+Have fun playing with Data Studio
 
