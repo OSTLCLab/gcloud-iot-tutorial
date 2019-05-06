@@ -24,7 +24,7 @@ Steps to be done
 * Store the incomming data into a database 
 * Vizualize data
 
-## Step by step tutorial
+## Create a Device on Google IoT Core
 
 ### Open an Account on gCloud
 1. Create an Account for Google cloud, using your voucher.
